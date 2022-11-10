@@ -32,15 +32,9 @@ connection.connect(function(err) {
 
 const port = process.env.PORT || 5000
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
-
 app.get('/', (request, response) => {
-    let testName = 'Shrek'
-
-    response.status(200).send({
-        'name': testName
+    response.send({
+        name: "Shrek is my father"
     })
 })
 
