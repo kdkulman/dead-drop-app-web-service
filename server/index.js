@@ -1,18 +1,9 @@
 require('dotenv').config();
-
-//express is the framework we're going to use to handle requests
 const express = require('express')
-
-//Create a new instance of express
 const app = express()
-
-var http = require('http');
-var mysql = require('mysql2');
-
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end('Hello World!');
-}).listen(8080);
+const cors = require('cors')
+const port = process.env.PORT || 5000
+const mysql = require('mysql2');
 
 let connection = mysql.createConnection({
   //connectionLimit : 10,
@@ -24,13 +15,10 @@ let connection = mysql.createConnection({
   //port:process.env.DB_PORT
 })
 
-
 connection.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
-
-const port = process.env.PORT || 5000
 
 app.all('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -38,12 +26,11 @@ app.all('/', function(req, res, next) {
   next()
 });
 
-app.get('/', (request, response) => {
-    response.send({
-        name: "Shrek is my father"
-    })
+//You can use this to check if your server is working
+app.get('/', (req, res)=>{
+  res.send({ gender : 'male'})
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log("Server up and running on port: " + (port));
+});
