@@ -28,9 +28,13 @@ app.all('/', function(req, res, next) {
 
 //You can use this to check if your server is working
 app.get('/', (req, res)=>{
-  res.send({ gender : 'male'})
+  res.send({ gender : 'kevin'})
 })
+
+app.use('/', require('./queries/storeMessage.js'))
 
 app.listen(port, () => {
   console.log("Server up and running on port: " + (port));
 });
+
+module.exports = connection
