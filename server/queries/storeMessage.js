@@ -7,7 +7,6 @@ let router = express.Router()
 router.post("/", (request, response) => {
 
     //THIS IS NOT FINAL, AMEND!!!!!!! 
-    const messageId = 666 //request.messageId;
     const text = 'banana';//request.text;
     // const country = request.country;
     const dateCreated = "CURRENT_TIMESTAMP";
@@ -17,6 +16,21 @@ router.post("/", (request, response) => {
     const isRead = 0;
     const tempMessageId = 100;
     const tempText = 'banana';
+    let messageId = 0;
+
+    let idQuery = 'SELECT MAX(MessageId) FROM Messages'
+
+    pool.query(idQuery, function(err, results, fields) {
+        if (err) {
+            console.log(err);
+            console.log("this activates");
+
+        } else {
+            messageId = results[0].messageId + 1;
+
+            console.log(results[0]);
+        }
+    });
 
     let theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(${messageId}, '${text}', CURRENT_TIMESTAMP, ${messageLength})`
     let values = [tempMessageId, 'testbanana', 10]
