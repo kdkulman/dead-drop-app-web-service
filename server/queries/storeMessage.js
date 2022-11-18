@@ -1,40 +1,54 @@
-// const { response } = require('express')
-// const { request } = require('express')
+const { response } = require('express')
+const { request } = require('express')
 const express = require('express')
-const connection = require('../utilities/databaseConnection.js').connection
-let router = express.Router() //retrieve the router object from express
+const pool = require('../utilities/databaseConnection.js')
+let router = express.Router() 
 
 router.post("/", (request, response) => {
-    console.log(request.body)
-    //Retrieve data from query params\
+
     //THIS IS NOT FINAL, AMEND!!!!!!! 
-    const messageId = request.messageId;
-    const text = request.text;
-    const country = request.country;
+    // const messageId = request.messageId;
+    // const text = request.text;
+    // const country = request.country;
     const dateCreated = "CURRENT_TIMESTAMP";
     const sender = "null";
     const recipient = "null";
     const messageLength = 4;
     const isRead = 0;
+    const tempMessageId = 100;
+    const tempText = 'banana';
 
-    //We're using placeholders ($1, $2, $3) in the SQL query string to avoid SQL Injection
-    //If you want to read more: https://stackoverflow.com/a/8265319
-    let theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(49966, test, CURRENT_TIMESTAMP, 4)`
-    //let values = [messageId, text, dateCreated, messageLength]
+    let theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(104, 'HELLO JASHAN', CURRENT_TIMESTAMP, 12)`
+    let values = [tempMessageId, 'testbanana', 10]
 
-    connection.query(theQuery, function (error, results, fields) {
-        if (error) {
-            response.status(401).send({
-                message: 'Could not store message in database' 
+    pool.query(theQuery, function(err, results, fields) {
+        if (err) {
+            console.log(err);
+            response.status(400).send({
+                message: 'Message could not be inserted' 
             })
         } else {
-            console.log("Inserted message");
             response.status(200).send({
                 message: 'Inserted Message' 
             })
         }
     });
-})
 
-// "return" the router
+    // pool.promise().query(theQuery, values) 
+    //     .then(result => {
+    //         console.log("Inserted message");
+    //         response.status(200).send({
+    //             message: 'Inserted Message' 
+    //         })
+    //     })
+        
+        // .catch(error => {
+        //     console.log(error);
+        //     console.log("error, message could not be stored");
+        //     response.status(401).send({
+        //         message: 'Could not store message in database' 
+        //     })
+        // })
+});
+
 module.exports = router
