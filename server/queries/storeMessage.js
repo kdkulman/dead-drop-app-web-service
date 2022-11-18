@@ -7,25 +7,25 @@ let router = express.Router()
 router.post("/", (request, response) => {
 
     //THIS IS NOT FINAL, AMEND!!!!!!! 
-    // const messageId = request.messageId;
-    // const text = request.text;
+    const messageId = 666 //request.messageId;
+    const text = 'banana';//request.text;
     // const country = request.country;
     const dateCreated = "CURRENT_TIMESTAMP";
     const sender = "null";
     const recipient = "null";
-    const messageLength = 4;
+    const messageLength = text.length;
     const isRead = 0;
     const tempMessageId = 100;
     const tempText = 'banana';
 
-    let theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(104, 'HELLO JASHAN', CURRENT_TIMESTAMP, 12)`
+    let theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(${messageId}, '${text}', CURRENT_TIMESTAMP, ${messageLength})`
     let values = [tempMessageId, 'testbanana', 10]
 
     pool.query(theQuery, function(err, results, fields) {
         if (err) {
             console.log(err);
             response.status(400).send({
-                message: 'Message could not be inserted' 
+                message: err
             })
         } else {
             response.status(200).send({
