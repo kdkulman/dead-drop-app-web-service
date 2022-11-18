@@ -18,7 +18,7 @@ router.post("/", (request, response) => {
     const tempText = 'banana';
     let messageId = 0;
 
-    let idQuery = 'SELECT MAX(MessageId) FROM Messages'
+    let idQuery = 'SELECT MAX(MessageId) AS Id FROM Messages'
 
     pool.query(idQuery, function(err, results, fields) {
         if (err) {
@@ -26,27 +26,29 @@ router.post("/", (request, response) => {
             console.log("this activates");
 
         } else {
-            messageId = results[0].messageId + 1;
-
-            console.log(results[0]);
+            messageId = results[0].Id + 1;
+            let theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(${messageId}, '${text}', CURRENT_TIMESTAMP, ${messageLength})`
+            //let values = [tempMessageId, 'testbanana', 10]
+        
+            pool.query(theQuery, function(err, results, fields) {
+                if (err) {
+                    console.log(err);
+                    response.status(400).send({
+                        message: err
+                    })
+                } else {
+                    response.status(200).send({
+                        message: 'Inserted Message' 
+                    })
+                }
+            });
+            console.log(results[0].Id); //print 666
         }
     });
 
-    let theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(${messageId}, '${text}', CURRENT_TIMESTAMP, ${messageLength})`
-    let values = [tempMessageId, 'testbanana', 10]
+    console.log(messageId + 1);
 
-    pool.query(theQuery, function(err, results, fields) {
-        if (err) {
-            console.log(err);
-            response.status(400).send({
-                message: err
-            })
-        } else {
-            response.status(200).send({
-                message: 'Inserted Message' 
-            })
-        }
-    });
+
 
     // pool.promise().query(theQuery, values) 
     //     .then(result => {
