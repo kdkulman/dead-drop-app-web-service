@@ -14,11 +14,11 @@ router.post("/", (request, response) => {
         } else {
             const messageId = results[0].Id + 1;
             const text = request.body.text; //request.text;
-            const country = request.country;
+            //const country = request.country;
             //const sender = "null";
             //const recipient = "null";
             const messageLength = text.length;
-            const theQuery = `INSERT INTO Messages(MessageId, Text, Country, DateCreated, MessageLength) VALUES(${messageId}, '${text}', '${country}', CURRENT_TIMESTAMP, ${messageLength})`
+            const theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(${messageId}, '${text}', CURRENT_TIMESTAMP, ${messageLength})`
         
             pool.query(theQuery, function(err, results, fields) {
                 if (err) {
@@ -27,8 +27,10 @@ router.post("/", (request, response) => {
                         message: err
                     })
                 } else {
+                    console.log('Message ID: ' + messageId)
+                    console.log('Message Text: ' + text)
                     response.status(200).send({
-                        message: 'Inserted Message, ID: ' + messageId + 'Your msg is: ' + text
+                        messageId: 'Inserted Message, ID: ' + messageId
                     })
                 }
             });

@@ -23,7 +23,7 @@ app.post('/', (req, res)=>{
   res.send("Your name is " + name);
 })
 
-app.use('/testPost', require('./queries/storeMessage.js'));
+app.use('/storeMessage', require('./queries/storeMessage.js'));
 
 app.listen(port, () => {
   console.log("Server up and running on port: " + (port));
