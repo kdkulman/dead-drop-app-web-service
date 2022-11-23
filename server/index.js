@@ -24,6 +24,7 @@ app.post('/', (req, res)=>{
 })
 
 app.use('/storeMessage', require('./queries/storeMessage.js'));
+app.use('/deleteMessage', require('./queries/deleteMessage.js'));
 
 app.listen(port, () => {
   console.log("Server up and running on port: " + (port));
