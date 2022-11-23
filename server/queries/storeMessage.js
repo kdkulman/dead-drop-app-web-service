@@ -7,6 +7,8 @@ let router = express.Router()
 router.use(bodyParser());
 
 router.post("/", (request, response) => {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
 
     pool.query('SELECT MAX(MessageId) AS Id FROM Messages', function(err, results, fields) {
         if (err) {
