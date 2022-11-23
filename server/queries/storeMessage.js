@@ -15,12 +15,13 @@ router.post("/", (request, response) => {
             console.log(err);
         } else {
             const messageId = results[0].Id + 1;
+            const password = request.body.messagePassword;
             const text = request.body.text; //request.text;
             //const country = request.country;
             //const sender = "null";
             //const recipient = "null";
             const messageLength = text.length;
-            const theQuery = `INSERT INTO Messages(MessageId, Text, DateCreated, MessageLength) VALUES(${messageId}, '${text}', CURRENT_TIMESTAMP, ${messageLength})`
+            const theQuery = `INSERT INTO Messages(MessageId, Text, MessagePassword, MessageLength) VALUES(${messageId}, '${text}', ${password}, ${messageLength})`
         
             pool.query(theQuery, function(err, results, fields) {
                 if (err) {
