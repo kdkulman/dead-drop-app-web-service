@@ -8,7 +8,7 @@ router.use(bodyParser());
 
 router.get("/", (request, response) => {
 
-    pool.query(`SELECT Text, MessageId FROM Messages WHERE MessagePassword = ${request.body.MessagePassword} `, function(err, results, fields) {
+    pool.query(`SELECT Text, MessageId FROM Messages WHERE MessagePassword = '${request.body.MessagePassword}' `, function(err, results, fields) {
         if (err) {
             console.log(err);
         } else {
