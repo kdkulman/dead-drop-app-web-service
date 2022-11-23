@@ -34,6 +34,8 @@ router.post("/", (request, response) => {
                         const password = results[0].MessagePassword;
                         console.log('Message ID: ' + messageId)
                         console.log('Message Text: ' + text)
+
+                        response.header("Access-Control-Allow-Origin", "*");
                         response.status(200).send({
                             messageId: 'Inserted Message, ID: ' + messageId,
                             password: 'With password :'+password
