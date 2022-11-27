@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const port = process.env.PORT || 5001
+const port = 5001 //process.env.PORT || 5001
 
 app.all('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -24,6 +24,7 @@ app.use('/storeMessage', require('./queries/storeMessage.js'));
 app.use('/deleteMessage', require('./queries/deleteMessage.js'));
 app.use('/getMessage', require('./queries/getMessage.js'));
 app.use('/storeUser', require('./queries/storeUser.js'));
+app.use('/addFriend', require('./queries/addFriend.js'));
 
 app.listen(port, () => {
   console.log("Server up and running on port: " + (port));
