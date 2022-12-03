@@ -6,18 +6,29 @@ const pool = require('../utilities/databaseConnection.js')
 let router = express.Router() 
 router.use(bodyParser());
 
+
+
+
 router.get("/", (request, response) => {
 
+
+    const theQuery = `SELECT Text 
+    FROM MessageContents
+    WHERE MessageContents.MessageId =(
+        SELECT MessageId
+        FROM Messages
+        WHERE MessageId = '${request.query.MessageId}' 
+        AND MessagePassword = '${request.query.MessagePassword}' 
+    ) `
     //get params from request
-    pool.query(`SELECT Text, MessageId FROM Messages WHERE MessagePassword = '${request.query.MessagePassword}' `, function(err, results, fields) {
+    pool.query(theQuery, function(err, results, fields) {
         if (err) {
             console.log(err);
         } else {
             console.log("Message text grabbed");
-            const msgText = results[0].Text;
+            const msgText = results[0];
             response.status(200).send({
-                tempText: 'Text: ' + msgText, //remove this for final
-                messageId: 'Grabbed Message, from ID: ' + results[0].MessageId
+                text: msgText
             })
         }
     });

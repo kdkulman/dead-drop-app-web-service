@@ -26,6 +26,7 @@ app.use('/getMessage', require('./queries/getMessage.js'));
 app.use('/storeUser', require('./queries/storeUser.js'));
 app.use('/addFriend', require('./queries/addFriend.js'));
 app.use('/getFriends', require('./queries/getFriends.js'));
+app.use('/getFriendRequests', require('./queries/getFriendRequests.js'));
 app.use('/searchUsers', require('./queries/searchUsers.js'));
 
 
