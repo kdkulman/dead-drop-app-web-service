@@ -20,14 +20,21 @@ app.get('/', (req, res)=>{
   res.send({ gender : 'male'})
 })
 
-app.use('/storeMessage', require('./queries/storeMessage.js'));
-app.use('/deleteMessage', require('./queries/deleteMessage.js'));
-app.use('/getMessage', require('./queries/getMessage.js'));
-app.use('/storeUser', require('./queries/storeUser.js'));
-app.use('/addFriend', require('./queries/addFriend.js'));
-app.use('/getFriends', require('./queries/getFriends.js'));
-app.use('/getFriendRequests', require('./queries/getFriendRequests.js'));
-app.use('/searchUsers', require('./queries/searchUsers.js'));
+//authorization
+app.use('/storeUser', require('./queries/authorization/createUser.js'));
+
+//messages
+app.use('/storeMessage', require('./queries/messages/storeMessage.js'));
+app.use('/deleteMessage', require('./queries/messages/deleteMessage.js'));
+app.use('/getMessage', require('./queries/messages/getMessage.js'));
+
+//friends
+app.use('/getFriends', require('./queries/friends/getFriendList.js'));
+app.use('/searchUsers', require('./queries/friends/searchUsers.js'));
+
+//friend requests
+app.use('/getFriendRequests', require('./queries/friendRequests/getFriendRequestList.js'));
+app.use('/addFriend', require('./queries/friendRequests/acceptFriendRequest.js'));
 
 
 app.listen(port, () => {
