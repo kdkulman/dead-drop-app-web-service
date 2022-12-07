@@ -1,6 +1,8 @@
+// const { response } = require('express')
+// const { request } = require('express')
 const express = require('express')
 const bodyParser = require('body-parser');
-const pool = require('../../utilities/databaseConnection.js')
+const pool = require('../utilities/databaseConnection.js')
 let router = express.Router() 
 router.use(bodyParser());
 
