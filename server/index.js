@@ -23,9 +23,9 @@ app.get('/', (req, res)=>{
 app.use('/storeMessage', require('./queries/storeMessage.js'));
 app.use('/deleteMessage', require('./queries/deleteMessage.js'));
 app.use('/getMessage', require('./queries/getMessage.js'));
-app.use('/storeUser', require('./queries/storeUser.js'));
+app.use('/storeUser', require('./queries/createUser.js'));
 app.use('/addFriend', require('./queries/addFriend.js'));
-app.use('/getFriends', require('./queries/getFriends.js'));
+app.use('/getFriends', require('./queries/getFriendsList.js'));
 app.use('/getFriendRequests', require('./queries/getFriendRequests.js'));
 app.use('/searchUsers', require('./queries/searchUsers.js'));
 
