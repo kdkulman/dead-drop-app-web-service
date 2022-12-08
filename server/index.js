@@ -28,7 +28,7 @@ app.use('/addFriend', require('./queries/addFriend.js'));
 app.use('/getFriends', require('./queries/getFriendsList.js'));
 app.use('/getFriendRequests', require('./queries/getFriendRequests.js'));
 app.use('/searchUsers', require('./queries/searchUsers.js'));
-
+app.use('/getFriendMessages', require('./queries/getFriendMessages.js'));
 
 app.listen(port, () => {
   console.log("Server up and running on port: " + (port));
