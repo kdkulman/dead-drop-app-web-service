@@ -25,13 +25,17 @@ router.post("/", (request, response) => {
     const country = request.body.country;
     const textLength = theText.length;
 
+
     if(sender == "") {
-        const theQuery1 = `INSERT INTO MESSAGES (MessageId, MessageLength) VALUES (${verificationCode}, ${textLength})`;
-        pool.query(theQuery, function(err, results, fields) {
+        const theQuery1 = `INSERT INTO MESSAGES (MessageId, MessageLength) VALUES ('${verificationCode}', ${textLength})`;
+        pool.query(theQuery1, function(err, results, fields) {
             if(err) {
+                console.log("QUERY 1 FAILINING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 console.log(err);
             } else {
-                const theQuery2 = `INSERT INTO messagecontents (MessageId, Text) VALUES (${verificationCode}, ${theText})`;
+                console.log("QUERY 1 success");
+
+                const theQuery2 = `INSERT INTO messagecontents (MessageId, Text) VALUES ('${verificationCode}', '${theText}')`;
                 pool.query(theQuery, function(err, results, fields) {
                     if(err) {
                         console.log(err);
@@ -46,17 +50,18 @@ router.post("/", (request, response) => {
         })
 
     } else {
-        const theQuery3 = `INSERT INTO MESSAGES (MessageId, MessageLength) VALUES (${verificationCode}, ${textLength})`;
+        const theQuery3 = `INSERT INTO MESSAGES (MessageId, MessageLength) VALUES ('${verificationCode}', ${textLength})`;
         pool.query(theQuery3, function(err, results, fields) {
             if(err) {
+                console.log("QUERY 3 FAILINING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 console.log(err);
             } else {
-                const theQuery4 = `INSERT INTO messagecontents (MessageId, Text) VALUES (${verificationCode}, ${theText})`;
+                const theQuery4 = `INSERT INTO messagecontents (MessageId, Text) VALUES ('${verificationCode}', '${theText}')`;
                 pool.query(theQuery4, function(err, results, fields) {
                     if(err) {
                         console.log(err);
                     } else {
-                        const theQuery5 = `INSERT INTO messageparticipants (MessageId, Sender, Recipient) VALUES (${verificationCode}, ${sender}, ${recipient})`;
+                        const theQuery5 = `INSERT INTO messageparticipants (MessageId, Sender, Recipient) VALUES ('${verificationCode}', '${sender}', '${recipient}')`;
                         pool.query(theQuery5, function(err, results, fields) {
                             if(err) {
                                 console.log(err);
