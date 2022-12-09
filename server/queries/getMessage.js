@@ -26,9 +26,7 @@ router.get("/", (request, response) => {
         } else {
             console.log("Message text grabbed");
             const msgText = results[0];
-            response.status(200).send({
-                text: msgText
-            })
+            response.status(200).send(msgText)
         }
     });
 });
