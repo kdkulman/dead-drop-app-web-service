@@ -10,19 +10,20 @@ router.post("/", (request, response) => {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    const userName = request.body.username;
-    const passWord = request.body.password;
-    const nickName = request.body.nickname;
+    const username = request.body.username;
+    const password = request.body.password;
+    const nickname = request.body.nickname;
     let theQuery = 
     `INSERT INTO USERS(Username, Password, Nickname) 
-    VALUES('${userName}', '${passWord}', '${nickName}')`
+    VALUES('${username}', '${password}', '${nickname}')`
     pool.query(theQuery, function(err, results, fields) {
         if (err) {
             console.log(err);
         } else {
             response.header("Access-Control-Allow-Origin", "*");
             response.status(200).send({
-                userName: 'Created user, username: ' + userName,
+                username: username,
+                nickname: nickname
             })
         }
     });
