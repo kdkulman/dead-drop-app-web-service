@@ -18,13 +18,13 @@ router.post("/", (request, response) => {
             return v.toString(16);
         });
     }
+    
     const verificationCode = uuid() + "";
     const theText = request.body.text;
     const sender = request.body.sender;
     const recipient = request.body.recipient;
     const country = request.body.country;
     const textLength = theText.length;
-
 
     if(sender == "") {
         const theQuery1 = `INSERT INTO MESSAGES (MessageId, MessageLength) VALUES ('${verificationCode}', ${textLength})`;
