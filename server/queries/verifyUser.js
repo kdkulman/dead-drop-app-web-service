@@ -12,7 +12,7 @@ router.post("/", (request, response) => {
 
     const username = request.body.username;
     const password = request.body.password;
-    const theQuery = `SELECT Username FROM USERS WHERE Username = '${username}' AND Password = '${password}'`;
+    const theQuery = `SELECT Username, Nickname FROM USERS WHERE Username = '${username}' AND Password = '${password}'`;
 
     pool.query(theQuery, function(err, results, fields) {
         if (err) {
