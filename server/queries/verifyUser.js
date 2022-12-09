@@ -10,9 +10,9 @@ router.post("/", (request, response) => {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    const userName = request.body.username;
-    const passWord = request.body.password;
-    const theQuery = `SELECT Username FROM USERS WHERE Username = '${userName}' AND Password = '${passWord}'`;
+    const username = request.body.username;
+    const password = request.body.password;
+    const theQuery = `SELECT Username FROM USERS WHERE Username = '${username}' AND Password = '${password}'`;
 
     pool.query(theQuery, function(err, results, fields) {
         if (err) {
@@ -21,13 +21,13 @@ router.post("/", (request, response) => {
             response.header("Access-Control-Allow-Origin", "*");
             if(results[0] == undefined) {
                 response.status(200).send({
-                    userName: 'Username or password incorrect!',
+                    username: 'Username or password incorrect!',
                     success : false
                 })
             } else {
                 response.status(200).send({
-                    userName: 'User ' + results[0].Username + ' found!',
-                    success : true
+                    username: results[0].Username,
+                    nickname: results[0].Nickname
                 })
             }
         }
