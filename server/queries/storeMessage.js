@@ -18,7 +18,7 @@ router.post("/", (request, response) => {
             return v.toString(16);
         });
     }
-    
+
     const verificationCode = uuid() + "";
     const theText = request.body.text;
     const sender = request.body.sender;
@@ -30,19 +30,18 @@ router.post("/", (request, response) => {
         const theQuery1 = `INSERT INTO MESSAGES (MessageId, MessageLength) VALUES ('${verificationCode}', ${textLength})`;
         pool.query(theQuery1, function(err, results, fields) {
             if(err) {
-                console.log("QUERY 1 FAILINING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 console.log(err);
             } else {
                 console.log("QUERY 1 success");
 
                 const theQuery2 = `INSERT INTO messagecontents (MessageId, Text) VALUES ('${verificationCode}', '${theText}')`;
-                pool.query(theQuery, function(err, results, fields) {
+                pool.query(theQuery2, function(err, results, fields) {
                     if(err) {
                         console.log(err);
                     } else {
                         response.header("Access-Control-Allow-Origin", "*");
                         response.status(200).send({
-                            url:'localhost:5000/'+`getMessage?MessageId=${messageId}&MessagePassword=${password}`
+                            url:'localhost:5000/'+`getMessage?MessageId=${verificationCode}`
                         })
                     }  
                 })
@@ -80,48 +79,3 @@ router.post("/", (request, response) => {
     }
 });
 module.exports = router;
-
-
-    //MessageId is created by grabbing largest ID
-    // pool.query('SELECT MAX(MessageId) AS Id FROM Messages', function(err, results, fields) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-
-    //         const messageId = results[0].Id + 1;
-    //         const text = request.body.text; 
-    //         const messageLength = text.length;
-
-    //         const theQuery1 = `INSERT INTO Messages(MessageId, MessagePassword, MessageLength) 
-    //                             VALUES(replace(uuid(),'-',''), ${messageLength})`
-
-    //         const theQuery2 = `INSERT INTO MessageContents(MessageId, Text)
-    //                             VALUES(${messageId}, '${text}');`;
-                                
-    //         const theQuery3 = `SELECT MessagePassword FROM Messages WHERE MessageId = ${messageId}`
-
-    //         pool.query(theQuery1, function(err, results, fields) {
-    //             pool.query(theQuery2, function(err, results, fields) {
-    //                 pool.query(theQuery3, function(err, results, fields) {
-    //                     if (err) {
-    //                         console.log(err);
-    //                         response.status(400).send({
-    //                             message: err
-    //                         })
-    //                     } else {
-    //                         const password = results[0].MessagePassword;
-    //                         console.log('Message ID: ' + messageId)
-    //                         console.log('Message Text: ' + text)
-
-    //                         response.header("Access-Control-Allow-Origin", "*");
-    //                         response.status(200).send({
-
-    //                             url:'localhost:5000/'+`getMessage?MessageId=${messageId}&MessagePassword=${password}`
-    //                         })
-    //                     }
-    //                 });
-    //             });
-                
-    //         });
-    //     }
-    // });
