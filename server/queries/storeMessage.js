@@ -41,7 +41,7 @@ router.post("/", (request, response) => {
                     } else {
                         response.header("Access-Control-Allow-Origin", "*");
                         response.status(200).send({
-                            url:'localhost:5000/'+`getMessage?MessageId=${verificationCode}`
+                            url:'https://dead-drop-app-web-service.herokuapp.com/'+`getMessage?MessageId=${verificationCode}`
                         })
                     }  
                 })
