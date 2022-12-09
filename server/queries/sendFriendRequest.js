@@ -10,20 +10,35 @@ router.post("/", (request, response) => {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    const userName = request.body.username;
-    const passWord = request.body.password;
-    const nickName = request.body.nickname;
-    let theQuery = 
-    `INSERT INTO USERS(Username, Password, Nickname) 
-    VALUES('${userName}', '${passWord}', '${nickName}')`
+    const sender = request.body.sender;
+    const receiver = request.body.receiver;
+    const theQuery = `SELECT Username FROM USERS WHERE Username = '${receiver}'`;
+
     pool.query(theQuery, function(err, results, fields) {
         if (err) {
             console.log(err);
         } else {
-            response.header("Access-Control-Allow-Origin", "*");
-            response.status(200).send({
-                userName: 'Created user, username: ' + userName,
-            })
+            if(results[0] == undefined) {
+                response.status(200).send({
+                    status: 'Request failed. Target user does not exist',
+                    success: false
+                })
+            } else {
+                const theQuery2 = `INSERT INTO friendrequests(RequestSender, RequestReceiver) VALUES ('${sender}', '${receiver}')`;
+                pool.query(theQuery2, function(err, results, fields) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        response.header("Access-Control-Allow-Origin", "*");
+                        response.status(200).send({
+                        status: 'Request sent from ' + sender + ' to ' + receiver + '!',
+                        success: true
+                        })
+                    }
+                })
+
+            }
+            
         }
     });
 });

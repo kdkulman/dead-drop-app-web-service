@@ -31,6 +31,7 @@ app.use('/getFriendMessages', require('./queries/getFriendMessages.js'));
 app.use('/deleteFriendRequest', require('./queries/deleteFriendRequest.js'));
 app.use('/acceptFriendRequest', require('./queries/acceptFriendRequest.js'));
 app.use('/verifyUser', require('./queries/verifyUser.js'));
+app.use('/sendFriendRequest', require('./queries/sendFriendRequest.js'));
 
 
 app.listen(port, () => {
