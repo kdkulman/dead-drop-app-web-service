@@ -12,19 +12,24 @@ router.post("/", (request, response) => {
 
     const username = request.body.username;
     const password = request.body.password;
-    const nickname = request.body.nickname;
-    let theQuery = 
-    `INSERT INTO USERS(Username, Password, Nickname) 
-    VALUES('${username}', '${password}', '${nickname}')`
+    const theQuery = `SELECT Username, Nickname FROM USERS WHERE Username = '${username}' AND Password = '${password}'`;
+
     pool.query(theQuery, function(err, results, fields) {
         if (err) {
             console.log(err);
         } else {
             response.header("Access-Control-Allow-Origin", "*");
-            response.status(200).send({
-                username: username,
-                nickname: nickname
-            })
+            if(results[0] == undefined) {
+                response.status(200).send({
+                    username: 'Username or password incorrect!',
+                    success : false
+                })
+            } else {
+                response.status(200).send({
+                    username: results[0].Username,
+                    nickname: results[0].Nickname
+                })
+            }
         }
     });
 });
