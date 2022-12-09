@@ -32,7 +32,7 @@ app.use('/deleteFriendRequest', require('./queries/deleteFriendRequest.js'));
 app.use('/acceptFriendRequest', require('./queries/acceptFriendRequest.js'));
 app.use('/verifyUser', require('./queries/verifyUser.js'));
 app.use('/sendFriendRequest', require('./queries/sendFriendRequest.js'));
-app.use('/getMostActiveUser', require('./queries/getMostActiveUser.js'));
+app.use('/getMostActiveFriend', require('./queries/getMostActiveFriend.js'));
 
 
 app.listen(port, () => {
