@@ -17,8 +17,7 @@ router.get("/", (request, response) => {
     WHERE MessageContents.MessageId =(
         SELECT MessageId
         FROM Messages
-        WHERE MessageId = '${request.query.MessageId}' 
-        AND MessagePassword = '${request.query.MessagePassword}' 
+        WHERE MessageId = '${request.query.MessageId}'  
     ) `
     //get params from request
     pool.query(theQuery, function(err, results, fields) {
