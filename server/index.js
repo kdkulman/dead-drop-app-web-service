@@ -30,6 +30,8 @@ app.use('/searchUsers', require('./queries/searchUsers.js'));
 app.use('/getFriendMessages', require('./queries/getFriendMessages.js'));
 app.use('/deleteFriendRequest', require('./queries/deleteFriendRequest.js'));
 app.use('/acceptFriendRequest', require('./queries/acceptFriendRequest.js'));
+app.use('/getMostActiveFriend', require('./queries/getMostActiveFriend.js'));
+
 
 
 app.listen(port, () => {
