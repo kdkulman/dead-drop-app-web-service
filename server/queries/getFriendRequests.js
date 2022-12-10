@@ -7,7 +7,7 @@ let router = express.Router();
 router.use(bodyParser());
 
 
-router.get("/", (request, response) => {
+router.post("/", (request, response) => {
 
     let theQuery = `select RequestSender FROM FriendRequests 
     WHERE RequestReceiver = '${request.body.currUser}'`
