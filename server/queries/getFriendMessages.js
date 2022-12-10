@@ -8,7 +8,7 @@ router.use(bodyParser());
 
 
 
-router.get("/", (request, response) => { 
+router.post("/", (request, response) => { 
     let theQuery = 
     `Select Text
     From messagecontents MC
@@ -16,6 +16,10 @@ router.get("/", (request, response) => {
             (SELECT MessageId
             FROM MessageParticipants
             WHERE Recipient = '${request.body.currUser}'
+
+            AND
+        
+            SENDER = '${request.body.sender}'
             )`
 
     pool.query(theQuery, function(err, results, fields) {
