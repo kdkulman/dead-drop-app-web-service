@@ -8,23 +8,15 @@ router.use(bodyParser());
 
 
 
-router.get("/", (request, response) => {
-
+router.get("/", (request, response) => { 
     let theQuery = 
-    `Select MP.Sender Send, Text
+    `Select Text
     From messagecontents MC
-    JOIN messageparticipants MP 
-    ON MC.MessageId = MP.MessageId
-    where MP.Recipient = '${request.body.currUser}'
-    AND MP.Sender IN 
-        (select Friend1 AS FriendList 
-        FROM Friends
-        WHERE Friend2 = '${request.body.currUser}'
-        UNION
-        select Friend2
-        from Friends
-        where Friend1 = '${request.body.currUser}')`
-    
+    WHERE MC.MessageId IN
+            (SELECT MessageId
+            FROM MessageParticipants
+            WHERE Recipient = '${request.body.currUser}'
+            )`
 
     pool.query(theQuery, function(err, results, fields) {
         if (err) {
@@ -34,10 +26,8 @@ router.get("/", (request, response) => {
             console.log("Number of friends: " + results.length)
             let stringFriendsMessages = [];
             results.forEach(element => {
-                console.log("This guy: " + element.Send);
-                stringFriendsMessages.push([element.Send, element.Text]);
+                stringFriendsMessages.push(element.Text.valueOf());
             });
-            
             response.status(200).send({
                 friendsList: stringFriendsMessages
             })
