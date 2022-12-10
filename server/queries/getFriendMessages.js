@@ -7,7 +7,6 @@ let router = express.Router();
 router.use(bodyParser());
 
 
-
 router.post("/", (request, response) => { 
     let theQuery = 
     `Select Text

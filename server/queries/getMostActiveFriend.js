@@ -9,6 +9,9 @@ router.use(bodyParser());
 
 
 router.post("/", (request, response) => {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     let theQuery = 
     `
     SELECT tem.ActiveFriend, COUNT(tem.ActiveFriend) AS msgAmount
