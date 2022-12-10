@@ -6,9 +6,7 @@ const pool = require('../utilities/databaseConnection.js')
 let router = express.Router();
 router.use(bodyParser());
 
-
-
-router.get("/", (request, response) => {
+router.post("/", (request, response) => {
     let theQuery = `select Friend1 AS FriendList FROM Friends
         WHERE Friend2 = '${request.body.currUser}' 
         UNION
@@ -28,7 +26,7 @@ router.get("/", (request, response) => {
             });
             
             response.status(200).send({
-                friendsList: stringFriends
+                friendList: stringFriends
             })
         }
     });
