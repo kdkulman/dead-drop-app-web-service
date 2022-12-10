@@ -8,7 +8,7 @@ router.use(bodyParser());
 
 
 
-router.get("/", (request, response) => {
+router.post("/", (request, response) => {
     let theQuery = 
     `
     SELECT tem.ActiveFriend, COUNT(tem.ActiveFriend) AS msgAmount
